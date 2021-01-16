@@ -56,8 +56,11 @@ body, div {
 	background-color: #fff;
 	font-size: 1.2rem;
 }
-#page .channel .programme:first-child() {
+#page .channel .programmes:first-child {
 	border-left: 1px solid #fff;
+}
+#page .channel .programme:last-child {
+	border-right: 1px solid #ccc;
 }
 #page .channel .programme.current {
 	background-color: #ffdd8f;

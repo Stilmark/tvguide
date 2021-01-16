@@ -23,11 +23,15 @@ $().ready(function() {
 	};
 
 	var timeline = $('<div>', {class: 'timeline'});
-	var h;
-	for (h = 0; h < 24; h++) {
+	var h = 0; var i = 0;
+	for (i = 0; i < 26; i++) {
+		if (h == 24) {
+			h = 0;
+		}
 		$.each(['00','30'], function(key, m) {
 			timeline.append($('<div>').text(h+':'+m).width((30 * minuteMultipier)-1));
 		});
+		h++;
 	}
 
 	$.get('https://www.dr-massive.com/api/schedules', channelQuery )
@@ -40,7 +44,9 @@ $().ready(function() {
 			var scrollTo = 0;
 
 			$.each(channelData.schedules, function(key, programmeData) {
+
 				// console.log(programmeData);
+
 				var item = programmeData.item;
 				var metadata = [];
 
@@ -84,14 +90,13 @@ $().ready(function() {
 					img
 				).width((duration * minuteMultipier) - 1).css('left', ((offset * minuteMultipier) + (timelineOffset * minuteMultipier)) + 'px');
 
-
 				if (programmeData.live) {
 					programme.addClass('live');
 				}
 
 				if (now > startDate && now < endDate) {
 					programme.addClass('current');
-					scrollTo = offset * minuteMultipier;
+					scrollTo = (offset * minuteMultipier) - 500;
 				}
 
 				programmes.append(programme);
@@ -114,6 +119,8 @@ $().ready(function() {
 
 	});
 
-
+	$( '#page' ).on('scroll', '.channel', function() {
+		console.log($(this).scrollLeft());
+	});
 
 });
