@@ -1,0 +1,65 @@
+html, body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 62.5%;
+    font-weight: 400;
+    background-color: #f6f6f6;
+}
+body, div {
+	font-size: 1.2rem;
+}
+
+#page {
+	font-size: 1.6rem;
+}
+
+#page .timeline div {
+	display: inline-block;
+	box-sizing: border-box;
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	width: 120px;
+	padding: 0.5rem;
+}
+
+#page .channel {
+	height: 240px;
+	white-space: nowrap;
+	overflow: auto;
+}
+
+#page h2 {
+	margin-left: 2rem;
+	font-size: 2rem;
+	line-height: 1;
+	font-weight: bold;
+}
+
+#page .channel .programme {
+	display: inline-block;
+	overflow: hidden;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-left: 0;
+	padding: 1rem;
+	height: 200px;
+	background-color: #fff
+	font-size: 1.2rem;
+}
+#page .channel .programme:first-child() {
+	border-left: 1px solid #ccc;
+}
+#page .channel .programme .timeslot {
+	color: #999;
+}
+#page .channel .programme a {
+	font-weight: bold;
+	color: #333;
+}
+#page .channel .programme .meta {
+	margin-top: 0.5rem;
+}
+
+#page .channel .programme img {
+	margin-top: 1rem;
+	border-radius: 4px;
+}
