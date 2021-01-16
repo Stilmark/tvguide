@@ -45,7 +45,7 @@ $().ready(function() {
 
 			$.each(channelData.schedules, function(key, programmeData) {
 
-				// console.log(programmeData);
+				console.log(programmeData);
 
 				var item = programmeData.item;
 				var metadata = [];
@@ -97,6 +97,9 @@ $().ready(function() {
 				if (now > startDate && now < endDate) {
 					programme.addClass('current');
 					scrollTo = (offset * minuteMultipier) - 500;
+					if (!a.attr('href')) {
+						programme.find('a').attr('href', broadcastChannel[channelData.channelId].url + '/kanal/' + channelData.channelId);
+					}
 				}
 
 				programmes.append(programme);
@@ -114,13 +117,5 @@ $().ready(function() {
 			$('#'+channelData.channelId).scrollLeft( scrollTo );
 
 		});
-
-
-
 	});
-
-	$( '#page' ).on('scroll', '.channel', function() {
-		console.log($(this).scrollLeft());
-	});
-
 });
