@@ -1,8 +1,7 @@
 $().ready(function() {
 
+	var minuteMultipier = 5.4;
 	var today = new Date().toISOString().slice(0, 10);
-	// var d = new Date();
-	// var yesterday = d.setDate(d.getDate() - 1);
 
 	var broadcastChannel = {
 		20875: {name: 'DR1', url: 'https://www.dr.dk/drtv'},
@@ -26,7 +25,7 @@ $().ready(function() {
 	var h;
 	for (h = 0; h < 24; h++) {
 		$.each(['00','30'], function(key, m) {
-			timeline.append($('<div>').text(h+':'+m));
+			timeline.append($('<div>').text(h+':'+m).width((30 * minuteMultipier)-1));
 		});
 	}
 
@@ -37,15 +36,21 @@ $().ready(function() {
 			var channel = $('<div>', {class: 'channel'});
 			var programmes = $('<div>', {class: 'programmes'});
 			var timelineOffset = 0;
+			var offset = 0;
 
 			$.each(channelData.schedules, function(key, programmeData) {
-				console.log(programmeData);
+				// console.log(programmeData);
 				var item = programmeData.item;
 				var metadata = [];
+
+				var startDate = moment(programmeData.startDate);
+				var endDate = moment(programmeData.endDate);
 				var duration = Math.round(Math.abs(new Date(programmeData.startDate) - new Date(programmeData.endDate)) / 60000);
 
 				if (key == 0) {
-					timelineOffset = ((new Date(today) - new Date(programmeData.startDate)) / 60000);
+					timelineOffset = (startDate - new Date(today)) / 60000;
+				} else {
+					var offset = (startDate - new Date(today)) / 60000;
 				}
 
 				metadata.push(duration+' mins');
@@ -57,7 +62,7 @@ $().ready(function() {
 					metadata.push('Episode '+item.episodeNumber);
 				}
 
-				var timeslot = $('<div>', {class: 'timeslot'}).text( new Date(programmeData.startDate).toISOString().substr(11, 5) + ' - ' + new Date(programmeData.endDate).toISOString().substr(11, 5) );
+				var timeslot = $('<div>', {class: 'timeslot'}).text( startDate.format('HH:mm') + ' - ' + endDate.format('HH:mm') );
 
 				var a = $('<a>', {class: 'title'}).text(item.title)
 				if (item.watchPath) {
@@ -76,7 +81,7 @@ $().ready(function() {
 					a,
 					$('<div>', {class: 'meta'}).text(metadata.join(', ')),
 					img
-				).width(duration * 4);
+				).width((duration * minuteMultipier) - 1).css('left', ((offset * minuteMultipier) - (timelineOffset * minuteMultipier)) + 'px');
 
 				if (programmeData.live) {
 					programme.addClass('live');
@@ -87,7 +92,7 @@ $().ready(function() {
 
 			channel.append(timeline.clone(),programmes);
 
-			channel.find('.timeline').css('margin-left', (timelineOffset*4) + 'px');
+			channel.find('.timeline').css('margin-left', (timelineOffset * minuteMultipier) + 'px');
 
 			$('#page').append(
 				$('<h2>', {class: 'title'}).text(broadcastChannel[channelData.channelId].name),

@@ -17,14 +17,14 @@ body, div {
 	box-sizing: border-box;
 	border-top: 1px solid #ccc;
 	border-left: 1px solid #ccc;
-	width: 120px;
 	padding: 0.5rem;
 }
 
 #page .channel {
-	height: 240px;
+	height: 220px;
 	white-space: nowrap;
 	overflow: auto;
+	border-bottom: 1px solid #ccc;
 }
 
 #page h2 {
@@ -34,19 +34,23 @@ body, div {
 	font-weight: bold;
 }
 
+#page .channel .programmes {
+	position: relative;
+	border-top: 1px solid #ccc;
+}
+
 #page .channel .programme {
-	display: inline-block;
+	position: absolute;
+	top: 0;
+	left:;
+	display: block;
 	overflow: hidden;
 	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-left: 0;
+	border-right: 1px solid #ccc;
 	padding: 1rem;
-	height: 200px;
+	height: 220px;
 	background-color: #fff
 	font-size: 1.2rem;
-}
-#page .channel .programme:first-child() {
-	border-left: 1px solid #ccc;
 }
 #page .channel .programme .timeslot {
 	color: #999;
