@@ -1,7 +1,8 @@
 $().ready(function() {
 
 	var minuteMultipier = 5.4;
-	var today = new Date().toISOString().slice(0, 10);
+	var today = moment().startOf('day');
+	var now = moment();
 
 	var broadcastChannel = {
 		20875: {name: 'DR1', url: 'https://www.dr.dk/drtv'},
@@ -9,7 +10,7 @@ $().ready(function() {
 	};
 	var channelQuery = {
 		channels: '20875,20876',
-		date: today,
+		date: today.format('YYYY-MM-DD'),
 		device: 'web_browser',
 		duration: 24,
 		hour: 0,
@@ -33,10 +34,10 @@ $().ready(function() {
 		.done(function( data ) {
 		$.each(data, function(key, channelData) {
 
-			var channel = $('<div>', {class: 'channel'});
-			var programmes = $('<div>', {class: 'programmes'});
+			var channel = $('<div>', {class: 'channel', id: channelData.channelId});
+			var programmes = $('<div>', {class: 'programmes'}).width(1440 * minuteMultipier);
 			var timelineOffset = 0;
-			var offset = 0;
+			var scrollTo = 0;
 
 			$.each(channelData.schedules, function(key, programmeData) {
 				// console.log(programmeData);
@@ -47,10 +48,10 @@ $().ready(function() {
 				var endDate = moment(programmeData.endDate);
 				var duration = Math.round(Math.abs(new Date(programmeData.startDate) - new Date(programmeData.endDate)) / 60000);
 
+				var offset = Math.round(startDate.diff(today) / 60000);
+
 				if (key == 0) {
-					timelineOffset = (startDate - new Date(today)) / 60000;
-				} else {
-					var offset = (startDate - new Date(today)) / 60000;
+					timelineOffset = (startDate > today) ? -offset:offset;
 				}
 
 				metadata.push(duration+' mins');
@@ -81,10 +82,16 @@ $().ready(function() {
 					a,
 					$('<div>', {class: 'meta'}).text(metadata.join(', ')),
 					img
-				).width((duration * minuteMultipier) - 1).css('left', ((offset * minuteMultipier) - (timelineOffset * minuteMultipier)) + 'px');
+				).width((duration * minuteMultipier) - 1).css('left', ((offset * minuteMultipier) + (timelineOffset * minuteMultipier)) + 'px');
+
 
 				if (programmeData.live) {
 					programme.addClass('live');
+				}
+
+				if (now > startDate && now < endDate) {
+					programme.addClass('current');
+					scrollTo = offset * minuteMultipier;
 				}
 
 				programmes.append(programme);
@@ -99,7 +106,14 @@ $().ready(function() {
 				channel
 			);
 
+			$('#'+channelData.channelId).scrollLeft( scrollTo );
+
 		});
+
+
+
 	});
+
+
 
 });

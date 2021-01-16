@@ -17,11 +17,13 @@ body, div {
 	box-sizing: border-box;
 	border-top: 1px solid #ccc;
 	border-left: 1px solid #ccc;
+	background-color: #666;
+	color: #fff;
 	padding: 0.5rem;
 }
 
 #page .channel {
-	height: 220px;
+	height: 224px;
 	white-space: nowrap;
 	overflow: auto;
 	border-bottom: 1px solid #ccc;
@@ -36,21 +38,29 @@ body, div {
 
 #page .channel .programmes {
 	position: relative;
-	border-top: 1px solid #ccc;
+	width: 100%;
+	background-color: #eee;
 }
 
 #page .channel .programme {
 	position: absolute;
 	top: 0;
-	left:;
+	left: 0;
 	display: block;
 	overflow: hidden;
 	box-sizing: border-box;
-	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	border-top: 1px solid #ccc;
 	padding: 1rem;
-	height: 220px;
-	background-color: #fff
+	height: 200px;
+	background-color: #fff;
 	font-size: 1.2rem;
+}
+#page .channel .programme:first-child() {
+	border-left: 1px solid #fff;
+}
+#page .channel .programme.current {
+	background-color: #ffdd8f;
 }
 #page .channel .programme .timeslot {
 	color: #999;
