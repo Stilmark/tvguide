@@ -65,9 +65,8 @@ body, div {
 #page .channel .programme.current {
 	background-color: #ffdd8f;
 }
-#page .channel .programme.reveal {
-	z-index: 10000;
-	width: auto !important;
+#page .channel .programme.active {
+	cursor: pointer;
 }
 #page .channel .programme .timeslot {
 	color: #999;

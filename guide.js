@@ -94,11 +94,15 @@ $().ready(function() {
 					programme.addClass('live');
 				}
 
+				if (item.watchPath) {
+					programme.addClass('active');
+				};
+
 				if (now > startDate && now < endDate) {
 					programme.addClass('current');
 					scrollTo = (offset * minuteMultipier) - 500;
 					if (!a.attr('href')) {
-						programme.find('a').attr('href', broadcastChannel[channelData.channelId].url + '/kanal/' + channelData.channelId);
+						programme.find('a').attr('href', broadcastChannel[channelData.channelId].url + '/kanal/' + channelData.channelId).addClass('active');
 					}
 				}
 
@@ -118,4 +122,11 @@ $().ready(function() {
 
 		});
 	});
+
+	$('#page').on('click', '.programme', function() {
+		if ($(this).find('a')[0].hasAttribute('href')) {
+			self.location = $(this).find('a').attr('href');
+		}
+	});
+
 });
