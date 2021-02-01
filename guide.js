@@ -1,10 +1,3 @@
-function successCallback() {
-    console.log(navigator.userAgent);
-}
-
-var userAgent = 'Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko) 69.0.3497.106.1/5.5 TV Safari/537.36';
-tizen.websetting.setUserAgentString(userAgent, successCallback);
-
 $().ready(function() {
 
 	var minuteMultipier = 5.4;
